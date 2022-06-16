@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+
+//components
+import CategoryListing from "./components/category-listing";
 
 function App() {
+
+  const categories = [
+    {
+      title: 'Hats',
+      imageUrl: '/images/1.webp'
+    },
+    {
+      title: 'Accessories',
+      imageUrl: '/images/2.webp'
+    },
+    {
+      title: 'Jackets',
+      imageUrl: '/images/3.webp'
+    },
+    {
+      title: 'Sneakers',
+      imageUrl: '/images/4.webp'
+    },
+    {
+      title: 'Womens',
+      imageUrl: '/images/5.webp'
+    },
+    {
+      title: 'Mens',
+      imageUrl: '/images/6.webp'
+    }
+  ]
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+      <CategoryListing categories={categories}/>
+
     </div>
-  );
+  )
 }
 
 export default App;
