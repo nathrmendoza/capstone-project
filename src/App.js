@@ -1,28 +1,43 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-
-//pages
-import Homepage from './pages/Homepage';
-import ShopPage from './pages/ShopPage';
-import ShopSubpage from './pages/ShopSubpage';
 
 //components
-import Navigation from './components/navigation';
+import CategoryListing from "./components/category-listing";
 
 function App() {
+
+  const categories = [
+    {
+      title: 'Hats',
+      imageUrl: '/images/1.webp'
+    },
+    {
+      title: 'Accessories',
+      imageUrl: '/images/2.webp'
+    },
+    {
+      title: 'Jackets',
+      imageUrl: '/images/3.webp'
+    },
+    {
+      title: 'Sneakers',
+      imageUrl: '/images/4.webp'
+    },
+    {
+      title: 'Womens',
+      imageUrl: '/images/5.webp'
+    },
+    {
+      title: 'Mens',
+      imageUrl: '/images/6.webp'
+    }
+  ]
+
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigation/>}>
-            <Route index element={<Homepage/>}/>
-            <Route path='/shop' element={<ShopPage/>}>
-              <Route path='/shop/subpage' element={<ShopSubpage/>}/>
-            </Route>
-          </Route>
-        </Routes>
-      </Router>
-    </div> 
-  );
+    
+      <CategoryListing categories={categories}/>
+
+    </div>
+  )
 }
 
 export default App;
