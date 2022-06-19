@@ -8,6 +8,7 @@ const Navigation = () => {
         <ul>
           <li><Link to='/'>Homepage</Link></li>
           <li><Link to='/shop'>Shop</Link></li>
+          <li><Link to='/shop/subpage'>Shop subpage</Link></li>
         </ul>
       </nav>
       <Outlet/>

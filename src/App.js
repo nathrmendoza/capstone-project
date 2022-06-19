@@ -1,41 +1,22 @@
+import { Routes, Route } from 'react-router-dom'
 
-//components
-import CategoryListing from "./components/category-listing";
+import Navigation from './components/navigation'
+import Homepage from './pages/Homepage'
+import Shop from './pages/ShopPage'
+import ShopSubpage from './pages/ShopSubpage'
 
 function App() {
 
-  const categories = [
-    {
-      title: 'Hats',
-      imageUrl: '/images/1.webp'
-    },
-    {
-      title: 'Accessories',
-      imageUrl: '/images/2.webp'
-    },
-    {
-      title: 'Jackets',
-      imageUrl: '/images/3.webp'
-    },
-    {
-      title: 'Sneakers',
-      imageUrl: '/images/4.webp'
-    },
-    {
-      title: 'Womens',
-      imageUrl: '/images/5.webp'
-    },
-    {
-      title: 'Mens',
-      imageUrl: '/images/6.webp'
-    }
-  ]
-
   return (
     <div className="App">
-    
-      <CategoryListing categories={categories}/>
-
+      <Routes>
+        <Route path='/' element={<Navigation />}>
+          <Route index element={<Homepage/>}/>
+          <Route path='/shop' element={<Shop/>}>
+            <Route path='/shop/subpage' element={<ShopSubpage/>}/>
+          </Route>
+        </Route>
+      </Routes>
     </div>
   )
 }
