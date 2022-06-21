@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
 import {createAuthUserWithEmailPassword, createUserDocument} from '../utils/firebase/firebase.utils'
 
+import FormInput from './form-input';
+import Button from './button';
+
 const formType = {
   displayName : '',
   email: '',
@@ -46,27 +49,23 @@ const SignUp = () => {
 
   return (
     <div className='form-wrapper'>
-      <h1>Sign in to your account</h1>
+      <h2>Don't have an account?</h2>
       <form target='_self' onSubmit={onFormSubmit}>
         <ul>
           <li>
-            <label htmlFor='dname'>Display name</label>
-            <input type='text' required id='dname' name='displayName' onChange={onChangeHandler} value={displayName}/>
+            <FormInput label='Display Name' type='text' name='displayName' onChange={onChangeHandler} value={displayName}/>
           </li>
           <li>
-            <label htmlFor='email'>Email</label>
-            <input type='email' required id='email' name='email' onChange={onChangeHandler} value={email}/>
+            <FormInput label='Email' type='email' name='email' onChange={onChangeHandler} value={email}/>
           </li>
           <li>
-            <label htmlFor='password'>Password</label>
-            <input type='password' required id='password' name='password' onChange={onChangeHandler} value={password}/>
+            <FormInput label='Password' type='password' name='password' onChange={onChangeHandler} value={password}/>
           </li>
           <li>
-            <label htmlFor='confirmpass'>Confirm Password</label>
-            <input type='password' required id='confirmpass' name='confirmPassword' onChange={onChangeHandler} value={confirmPassword}/>
+            <FormInput label='Confirm Password' type='password' name='confirmPassword' onChange={onChangeHandler} value={confirmPassword}/>
           </li>
         </ul>
-        <button type='submit'>Submit</button>
+        <Button type='submit' buttonType='submit'>SUMBIT</Button>
       </form>
     </div>
   )
