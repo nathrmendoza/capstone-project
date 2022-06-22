@@ -1,8 +1,17 @@
 import React, {useState} from 'react'
-import {createAuthUserWithEmailPassword, createUserDocument} from '../utils/firebase/firebase.utils'
 
+//components
 import FormInput from './form-input';
 import Button from './button';
+
+//firebase
+import { 
+  createAuthUserWithEmailPassword,
+  signInWithGooglePopup,
+  createUserDocument,
+  getUserDetails
+} from '../utils/firebase/firebase.utils'
+
 
 const formType = {
   displayName : '',
@@ -11,11 +20,19 @@ const formType = {
   confirmPassword: ''
 }
 
-const SignUp = () => {
+const SignUpForm = ({notifyHandler}) => {
 
   const [formFields, setFormFields] = useState(formType);
   const { displayName, email, password, confirmPassword } = formFields
   
+  const logGoogleUser = async () => {
+    const { user } = await signInWithGooglePopup();
+
+    console.log(user);
+
+    const userDocRef = await createUserDocument(user);
+  }
+
   const onChangeHandler = (event) => {
     const {name, value} = event.target;
     setFormFields({...formFields, [name]: value});
@@ -25,7 +42,7 @@ const SignUp = () => {
     ev.preventDefault();
 
     if (!(password === confirmPassword)) {
-      console.log('password mismatch');
+      notifyHandler('Password mismatch', 'warn')
       return;
     }
 
@@ -33,13 +50,20 @@ const SignUp = () => {
       const { user } = await createAuthUserWithEmailPassword(email, password);
       const userDocRef = await createUserDocument(user, { displayName });
 
+      //result
+      const test = await getUserDetails(userDocRef);
+      notifyHandler(`Success, created user ${test.displayName}`, 'success');
+
       resetForm();
 
     } catch (err) {
-      if (err.code == "auth/email-already-in-use") {
-        alert('Failed: email already used')
+      switch(err.code){
+        case 'auth/auth/email-already-in-use' :
+          notifyHandler('Email already used')
+          break;
+        default:
+            console.log(err);
       }
-      console.log('error occured signing up', err)
     }
   }
 
@@ -66,9 +90,10 @@ const SignUp = () => {
           </li>
         </ul>
         <Button type='submit' buttonType='submit'>SUMBIT</Button>
+        <Button type='button' buttonType='google' onClick={logGoogleUser}>Sign in with Google</Button>
       </form>
     </div>
   )
 }
 
-export default SignUp
+export default SignUpForm

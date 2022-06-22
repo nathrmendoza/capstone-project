@@ -11,7 +11,7 @@ const Navigation = () => {
           <li><Link to='/shop/subpage'>Shop subpage</Link></li>
         </ul>
         <ul>
-          <li><Link to='/sign-in'>Sign in</Link></li>
+          <li><Link to='/authentication'>Sign in</Link></li>
         </ul>
       </nav>
       <Outlet/>

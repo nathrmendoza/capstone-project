@@ -4,13 +4,16 @@ import { getAuth,
         signInWithPopup, 
         GoogleAuthProvider,
         createUserWithEmailAndPassword,
+        signInWithEmailAndPassword
       } from 'firebase/auth'
 
 import { 
   getFirestore,
   doc,
   setDoc,
-  getDoc
+  getDoc,
+  collection,
+  getDocs
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -66,14 +69,43 @@ export const createUserDocument = async(
     } catch(err) {
       console.log('Error setting up user', err);
     }
+  } else {
+    console.log('User already exists, will sign you in instead');
   }
 
   return userDocRef;
 }
+
 
 //email and password 
 export const createAuthUserWithEmailPassword = async (email, password) => {
   if (!email || !password) return;
 
   return await createUserWithEmailAndPassword(auth, email, password);
+}
+
+//sign in with email and password
+export const signInEP = async (email, password) => {
+
+  if (!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
+  
+}
+
+export const getUserDetails = async (user) => {
+  let userSnapshot = null;
+  try {
+    let userDocRef = user;
+    
+    if (!userDocRef.id)
+      userDocRef = doc(db, 'users', user.uid);
+    
+    userSnapshot = await getDoc(userDocRef);
+
+  } catch (err) {
+    console.log(err)
+  }
+  
+  return userSnapshot.data();
 }

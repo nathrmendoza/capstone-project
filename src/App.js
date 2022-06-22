@@ -1,10 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
 
+//components
 import Navigation from './components/navigation'
+
+//pages
 import Homepage from './pages/Homepage'
 import Shop from './pages/ShopPage'
 import ShopSubpage from './pages/ShopSubpage'
-import SignIn from './pages/SignIn'
+import Authentication from './pages/Authentication'
 
 function App() {
 
@@ -13,7 +16,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Navigation />}>
           <Route index element={<Homepage/>}/>
-          <Route path='/sign-in' element={<SignIn/>}/>
+          <Route path='/authentication' element={<Authentication/>}/>
           <Route path='/shop' element={<Shop/>}>
             <Route path='/shop/subpage' element={<ShopSubpage/>}/>
           </Route>
