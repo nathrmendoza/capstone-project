@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 
 //components
 import FormInput from './form-input';
@@ -12,6 +12,7 @@ import {
   getUserDetails
 } from '../utils/firebase/firebase.utils'
 
+import { UserContext } from '../context/user.context'
 
 const formType = {
   displayName : '',
@@ -25,6 +26,8 @@ const SignUpForm = ({notifyHandler}) => {
   const [formFields, setFormFields] = useState(formType);
   const { displayName, email, password, confirmPassword } = formFields
   
+  const { setCurrentUser } = useContext(UserContext);
+
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
 
@@ -51,8 +54,12 @@ const SignUpForm = ({notifyHandler}) => {
       const userDocRef = await createUserDocument(user, { displayName });
 
       //result
-      const test = await getUserDetails(userDocRef);
-      notifyHandler(`Success, created user ${test.displayName}`, 'success');
+      const userData = await getUserDetails(userDocRef);
+      
+      //sets context
+      setCurrentUser(userData);
+
+      notifyHandler(`Success, created user ${userData.displayName}`, 'success');
 
       resetForm();
 

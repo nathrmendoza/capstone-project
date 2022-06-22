@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 
 import { 
   signInEP,
@@ -8,6 +8,8 @@ import {
 
 import FormInput from './form-input'
 import Button from './button'
+
+import { UserContext } from '../context/user.context'
 
 const formType = {
   email: '',
@@ -19,12 +21,20 @@ const SignInForm = ({notifyHandler}) => {
   const [formFields, setFormFields] = useState(formType);
   const {email, password} = formFields;
 
+  /**
+   * any time context state is changed, whole component rerenders
+   */
+  const { setCurrentUser } = useContext(UserContext);
+
   const resetForm = () => {
     setFormFields(formType)
   }
   
   const signInWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
+    
+    //sets context
+    setCurrentUser(user);
 
     console.log(user)
     notifyHandler(`Hey ${user.displayName}!`, 'success');
@@ -40,13 +50,13 @@ const SignInForm = ({notifyHandler}) => {
     
     try {
       const { user } = await signInEP(email, password);
-      const test = await getUserDetails(user);
+      const userData = await getUserDetails(user);
       
-      //result
-      console.log(test);
+      //sets the context
+      setCurrentUser(userData);
 
       resetForm();
-      notifyHandler(`Hey, ${test.displayName}`, 'success');
+      notifyHandler(`Hey, ${userData.displayName}`, 'success');
     } 
     catch (err) {
       switch(err.code){
