@@ -25,16 +25,6 @@ const SignUpForm = ({notifyHandler}) => {
 
   const [formFields, setFormFields] = useState(formType);
   const { displayName, email, password, confirmPassword } = formFields
-  
-  const { setCurrentUser } = useContext(UserContext);
-
-  const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
-
-    console.log(user);
-
-    const userDocRef = await createUserDocument(user);
-  }
 
   const onChangeHandler = (event) => {
     const {name, value} = event.target;
@@ -56,12 +46,8 @@ const SignUpForm = ({notifyHandler}) => {
       //result
       const userData = await getUserDetails(userDocRef);
       
-      //sets context
-      setCurrentUser(userData);
-
-      notifyHandler(`Success, created user ${userData.displayName}`, 'success');
-
       resetForm();
+      notifyHandler(`Success, created user ${userData.displayName}`, 'success');
 
     } catch (err) {
       switch(err.code){
@@ -97,7 +83,6 @@ const SignUpForm = ({notifyHandler}) => {
           </li>
         </ul>
         <Button type='submit' buttonType='submit'>SUMBIT</Button>
-        <Button type='button' buttonType='google' onClick={logGoogleUser}>Sign in with Google</Button>
       </form>
     </div>
   )

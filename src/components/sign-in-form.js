@@ -21,22 +21,12 @@ const SignInForm = ({notifyHandler}) => {
   const [formFields, setFormFields] = useState(formType);
   const {email, password} = formFields;
 
-  /**
-   * any time context state is changed, whole component rerenders
-   */
-  const { setCurrentUser } = useContext(UserContext);
-
   const resetForm = () => {
     setFormFields(formType)
   }
   
   const signInWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
-    
-    //sets context
-    setCurrentUser(user);
-
-    console.log(user)
     notifyHandler(`Hey ${user.displayName}!`, 'success');
   }
 
@@ -52,9 +42,6 @@ const SignInForm = ({notifyHandler}) => {
       const { user } = await signInEP(email, password);
       const userData = await getUserDetails(user);
       
-      //sets the context
-      setCurrentUser(userData);
-
       resetForm();
       notifyHandler(`Hey, ${userData.displayName}`, 'success');
     } 
