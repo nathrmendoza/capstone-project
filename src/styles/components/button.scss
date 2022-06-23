@@ -1,0 +1,28 @@
+button {
+  display: inline-block;
+  padding: 5px 10px;
+  font-family: 'Segoe UI';
+  font-size: 14px;
+  line-height: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+  &.default-btn {
+    border: 3px solid #000;
+    background: #fff;
+    &:hover {
+      background: #000;
+      color: #fff;
+    }
+  }
+  &.inverted-btn {
+    border: 3px solid #000;
+    background: #000;
+    color: #fff;
+    &:hover {
+      background: #fff;
+      color: #000;
+    }
+  }
+}
