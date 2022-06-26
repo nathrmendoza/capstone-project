@@ -1,6 +1,8 @@
-import React, {useRef, useEffect} from 'react'
+import React, {useRef, useEffect, useContext} from 'react'
 import Button from './button'
 import '../styles/components/cart-dropdown.scss'
+import CartItem from './cart-item';
+import { CartContext } from '../context/cart.context';
 
 function useOnClickOutside(ref, func) {
   useEffect(() => {
@@ -25,9 +27,12 @@ const CartDropDown = ({clickOutsideHandler}) => {
   const wrapperRef = useRef(null);
   useOnClickOutside(wrapperRef, clickOutsideHandler);
 
+  const { cartItems } = useContext(CartContext)
+
   return (
     <div className='cart-dropdown' ref={wrapperRef} >
       <div className='cart-items'>
+        {cartItems.map(item => <CartItem key={item.id} item={item}/>)}
       </div>
       <Button buttonType='default' type='button'>Go to checkout</Button>
     </div>
