@@ -1,14 +1,21 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext} from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
 import { UserContext } from '../context/user.context'
 import Button from './button';
+import CartIcon from './cart-icon';
 
 import { signOutUser } from '../utils/firebase/firebase.utils';
+import CartDropDown from './cart-dropdown';
+import { CartContext } from '../context/cart.context';
 
 const Navigation = () => {
-
   const { currentUser } = useContext(UserContext);
+  const { isCartOpen, setCartOpen } = useContext(CartContext);
+
+  const toggleCartDropdown = () => {
+    setCartOpen(!isCartOpen);
+  }
 
   return (
     <Fragment>
@@ -23,7 +30,11 @@ const Navigation = () => {
           : <Fragment>
               <li><p>Hi {currentUser.displayName}</p></li>
               <li><Button type='button' buttonType='default' onClick={signOutUser}>Sign out</Button></li>
-            </Fragment>}
+              <li style={{position: 'relative'}}><CartIcon onClickHandler={toggleCartDropdown}/>
+                {isCartOpen && <CartDropDown clickOutsideHandler={toggleCartDropdown}/>}
+              </li>
+            </Fragment>
+          }
           
         </ul>
       </nav>
