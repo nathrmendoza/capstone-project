@@ -1,4 +1,5 @@
 import React, {useRef, useEffect, useContext} from 'react'
+import {Link} from 'react-router-dom'
 import Button from './button'
 import '../styles/components/cart-dropdown.scss'
 import CartItem from './cart-item';
@@ -34,7 +35,7 @@ const CartDropDown = ({clickOutsideHandler}) => {
       <div className='cart-items'>
         {cartItems.map(item => <CartItem key={item.id} item={item}/>)}
       </div>
-      <Button buttonType='default' type='button'>Go to checkout</Button>
+      <Link to='/checkout' className='default-btn'>Go to checkout</Link>
     </div>
   )
 }

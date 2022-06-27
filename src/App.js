@@ -8,6 +8,7 @@ import Homepage from './pages/Homepage'
 import Shop from './pages/ShopPage'
 import ShopSubpage from './pages/ShopSubpage'
 import Authentication from './pages/Authentication'
+import CheckoutPage from './pages/CheckoutPage'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='/shop' element={<Shop/>}>
             <Route path='/shop/subpage' element={<ShopSubpage/>}/>
           </Route>
+          <Route path='/checkout' element={<CheckoutPage/>}/>
         </Route>
       </Routes>
     </div>

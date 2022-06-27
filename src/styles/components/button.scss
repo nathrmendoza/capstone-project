@@ -1,4 +1,5 @@
-button {
+button, a {
+  text-decoration: none;
   display: inline-block;
   padding: 5px 10px;
   font-family: 'Segoe UI';
@@ -8,9 +9,11 @@ button {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease-out;
+  text-align: center;
   &.default-btn {
     border: 3px solid #000;
     background: #fff;
+    color: #000;
     &:hover {
       background: #000;
       color: #fff;
