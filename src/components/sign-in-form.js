@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react'
+import { notify } from '../utils/toast-notify/notify'
 
 import { 
   signInEP,
@@ -16,7 +17,7 @@ const formType = {
   password: '',
 }
 
-const SignInForm = ({notifyHandler}) => {
+const SignInForm = () => {
 
   const [formFields, setFormFields] = useState(formType);
   const {email, password} = formFields;
@@ -27,7 +28,7 @@ const SignInForm = ({notifyHandler}) => {
   
   const signInWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
-    notifyHandler(`Hey ${user.displayName}!`, 'success');
+    notify(`Hey ${user.displayName}!`, 'success');
   }
 
   const onChangeHandler = (event) => {
@@ -43,15 +44,15 @@ const SignInForm = ({notifyHandler}) => {
       const userData = await getUserDetails(user);
       
       resetForm();
-      notifyHandler(`Hey, ${userData.displayName}`, 'success');
+      notify(`Hey, ${userData.displayName}`, 'success');
     } 
     catch (err) {
       switch(err.code){
         case 'auth/user-not-found' :
-          notifyHandler('No user found with email')
+          notify('No user found with email')
           break;
         case 'auth/wrong-password' :
-            notifyHandler('Wrong password')
+            notify('Wrong password')
             break;
         default:
             console.log(err);

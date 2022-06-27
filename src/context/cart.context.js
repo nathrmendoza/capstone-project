@@ -20,6 +20,22 @@ const addingHelper = (cartItems, itemToAdd) => {
   return [...cartItems, {...itemToAdd, quantity: 1}]
 }
 
+const addItemQuantityHelper = (cartItems, itemToAdd) => {
+  return cartItems.map(cartItem => cartItem.id === itemToAdd.id 
+    ? {...cartItem, quantity: cartItem.quantity + 1}
+    : cartItem
+  )
+}
+const subItemQuantityHelper = (cartItems, itemToAdd) => {
+  //add functionality to remove the item if post qunatity would be less than 1
+
+  // if not === 1 just subtract
+  return cartItems.map(cartItem => cartItem.id === itemToAdd.id 
+    ? {...cartItem, quantity: cartItem.quantity - 1}
+    : cartItem
+  )
+}
+
 export const CartContext = createContext({
   isCartOpen: false,
   setCartOpen: () => {},
@@ -31,7 +47,9 @@ export const CartContext = createContext({
       price: 199.9,
     }
   ],
-  addItemToCart: () => {}
+  addItemToCart: () => {},
+  addItemQuantity: () => {},
+  subItemQuantity: () => {}
 });
 
 export const CartProvider = ({children}) => {
@@ -41,8 +59,16 @@ export const CartProvider = ({children}) => {
   const addItemToCart = itemToAdd => {
     setCartItems(addingHelper(cartItems, itemToAdd));
   }
+
+  const addItemQuantity = itemToAdd => {
+    setCartItems(addItemQuantityHelper(cartItems, itemToAdd))
+  }
+
+  const subItemQuantity = itemToAdd => {
+    setCartItems(subItemQuantityHelper(cartItems, itemToAdd))
+  }
   
-  const value = {isCartOpen, setCartOpen, addItemToCart, cartItems} 
+  const value = {isCartOpen, setCartOpen, addItemToCart, addItemQuantity, subItemQuantity, cartItems} 
   
   return (
     <CartContext.Provider value={value}>{children}</CartContext.Provider>

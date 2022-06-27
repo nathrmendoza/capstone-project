@@ -3,16 +3,15 @@ import React, {useState, useContext} from 'react'
 //components
 import FormInput from './form-input';
 import Button from './button';
+import { notify } from '../utils/toast-notify/notify';
 
 //firebase
 import { 
   createAuthUserWithEmailPassword,
-  signInWithGooglePopup,
   createUserDocument,
-  getUserDetails
+  getUserDetails,
+  signInEP
 } from '../utils/firebase/firebase.utils'
-
-import { UserContext } from '../context/user.context'
 
 const formType = {
   displayName : '',
@@ -21,7 +20,7 @@ const formType = {
   confirmPassword: ''
 }
 
-const SignUpForm = ({notifyHandler}) => {
+const SignUpForm = () => {
 
   const [formFields, setFormFields] = useState(formType);
   const { displayName, email, password, confirmPassword } = formFields
@@ -35,7 +34,7 @@ const SignUpForm = ({notifyHandler}) => {
     ev.preventDefault();
 
     if (!(password === confirmPassword)) {
-      notifyHandler('Password mismatch', 'warn')
+      notify('Password mismatch', 'warn')
       return;
     }
 
@@ -47,12 +46,15 @@ const SignUpForm = ({notifyHandler}) => {
       const userData = await getUserDetails(userDocRef);
       
       resetForm();
-      notifyHandler(`Success, created user ${userData.displayName}`, 'success');
+      notify(`Success, created user ${userData.displayName}`, 'success');
+
+      await signInEP(email, password);
+      window.location.reload(false);
 
     } catch (err) {
       switch(err.code){
         case 'auth/auth/email-already-in-use' :
-          notifyHandler('Email already used')
+          notify('Email already used')
           break;
         default:
             console.log(err);

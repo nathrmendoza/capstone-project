@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, useContext} from 'react'
-import {Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Button from './button'
 import '../styles/components/cart-dropdown.scss'
 import CartItem from './cart-item';
@@ -30,12 +30,18 @@ const CartDropDown = ({clickOutsideHandler}) => {
 
   const { cartItems } = useContext(CartContext)
 
+  const navigate = useNavigate();
+
+  const goToCheckoutHandler = () => {
+    navigate('/checkout')
+  }
+
   return (
     <div className='cart-dropdown' ref={wrapperRef} >
       <div className='cart-items'>
         {cartItems.map(item => <CartItem key={item.id} item={item}/>)}
       </div>
-      <Link to='/checkout' className='default-btn'>Go to checkout</Link>
+      <Button buttonType='default' type='button' onClick={goToCheckoutHandler}>Go to checkout</Button>
     </div>
   )
 }
