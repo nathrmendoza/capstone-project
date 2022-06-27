@@ -1,0 +1,35 @@
+.cart-item {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+  aside {
+    img {
+      display: block;
+      width: 64px;
+      height: 64px;
+    }
+  }
+  article {
+    width: calc(100% - 64px);
+    padding-left: 12px;
+    h5 {
+      display: block;
+      margin: 0;
+    }
+    .quan-price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 12px;
+        display: block;
+        max-width: 50%;
+        &.quantity {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
