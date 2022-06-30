@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 //helper function to find items in existing array
 //cart items that have the same id, if yes increment quantity
@@ -26,36 +26,56 @@ const addItemQuantityHelper = (cartItems, itemToAdd) => {
     : cartItem
   )
 }
-const subItemQuantityHelper = (cartItems, itemToAdd) => {
-  //add functionality to remove the item if post qunatity would be less than 1
+const subItemQuantityHelper = (cartItems, itemToSubtract) => {
+  const exisitingItem = cartItems.find(cartItem => {
+    return cartItem.id === itemToSubtract.id;
+  });
 
-  // if not === 1 just subtract
-  return cartItems.map(cartItem => cartItem.id === itemToAdd.id 
+  // if quantity is already 1 and need to subtract, just remove item
+  if (exisitingItem.quantity === 1) {
+    return cartItems.filter(cartItem => cartItem.id !== itemToSubtract.id);
+  }
+
+  // if not, return current item with subtracted quantity
+  return cartItems.map(cartItem => cartItem.id === itemToSubtract.id 
     ? {...cartItem, quantity: cartItem.quantity - 1}
     : cartItem
   )
 }
 
+const removeItemHelper = (cartItems, itemToRemove) => {
+  return cartItems.filter(cartItem => cartItem.id !== itemToRemove.id)
+}
+
 export const CartContext = createContext({
   isCartOpen: false,
   setCartOpen: () => {},
-  cartItems: [
-    {
-      id: 1,
-      imageUrl: "/images/products/mr993gl_nb_02_i.webp",
-      name: "MADE in USA 993 Core",
-      price: 199.9,
-    }
-  ],
+  cartItems: [],
   addItemToCart: () => {},
   addItemQuantity: () => {},
-  subItemQuantity: () => {}
+  subItemQuantity: () => {},
+  removeItem: () => {},
+  cartPriceTotal: 0,
+  cartQuantityOfItems: 0
 });
 
 export const CartProvider = ({children}) => {
   const [isCartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([])
-  
+  const [cartPriceTotal, setCartPriceTotal] = useState(0);
+  const [cartQuantityOfItems, setCartQuantityOfItems] = useState(0);
+
+  //best practice for useeffect is use one hook per function/responsibility
+  //calculate total price
+  useEffect(() => {
+    setCartPriceTotal(cartItems.reduce((total, item) => total + item.price, 0))  
+  }, [cartItems])
+
+  //calculate total number of products
+  useEffect(() => {
+    setCartQuantityOfItems(cartItems.reduce((total, item) => total + item.quantity, 0))
+  }, [cartItems])
+
   const addItemToCart = itemToAdd => {
     setCartItems(addingHelper(cartItems, itemToAdd));
   }
@@ -64,11 +84,25 @@ export const CartProvider = ({children}) => {
     setCartItems(addItemQuantityHelper(cartItems, itemToAdd))
   }
 
-  const subItemQuantity = itemToAdd => {
-    setCartItems(subItemQuantityHelper(cartItems, itemToAdd))
+  const subItemQuantity = itemToSubtract => {
+    setCartItems(subItemQuantityHelper(cartItems, itemToSubtract))
+  }
+
+  const removeItem = itemToRemove => {
+    setCartItems(removeItemHelper(cartItems, itemToRemove))
   }
   
-  const value = {isCartOpen, setCartOpen, addItemToCart, addItemQuantity, subItemQuantity, cartItems} 
+  const value = {
+    isCartOpen, 
+    setCartOpen, 
+    addItemToCart, 
+    addItemQuantity, 
+    subItemQuantity, 
+    removeItem,
+    cartItems,
+    cartPriceTotal,
+    cartQuantityOfItems
+  } 
   
   return (
     <CartContext.Provider value={value}>{children}</CartContext.Provider>

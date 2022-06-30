@@ -5,7 +5,7 @@ import { CartContext } from '../context/cart.context'
 
 const CheckoutPage = () => {
 
-  const { cartItems } = useContext(CartContext)
+  const { cartItems, cartPriceTotal } = useContext(CartContext)
 
   return (
     <div className='checkout-table'> 
@@ -18,8 +18,11 @@ const CheckoutPage = () => {
       </div>
       <div className='table-items'>
         {cartItems.length
-          ? cartItems.map(item => <CheckoutItem item={item}/>)
+          ? cartItems.map(item => <CheckoutItem key={item.id} item={item}/>)
           : <div className='no-items'>No items added yet!</div>}
+      </div>
+      <div className='total-row'>
+        Total: ${cartPriceTotal}
       </div>
     </div>
   )

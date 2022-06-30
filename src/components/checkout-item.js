@@ -5,10 +5,11 @@ import { CartContext } from '../context/cart.context'
 const CheckoutItem = ({item}) => {
   const {name, imageUrl, quantity, price} = item
   
-  const {addItemQuantity, subItemQuantity} = useContext(CartContext);
+  const {addItemQuantity, subItemQuantity, removeItem} = useContext(CartContext);
   
   const addHandler = () => addItemQuantity(item)
   const subHandler = () => subItemQuantity(item)
+  const removeHandler = () => removeItem(item);
 
   return (
     <div className='checkout-item'>
@@ -21,8 +22,11 @@ const CheckoutItem = ({item}) => {
         <div className='quan-text'>{quantity}</div>
         <Button buttonType='invert' onClick={addHandler} type="button">+</Button>
       </div>
+      <div className='price'>
+        {price}
+      </div>
       <div className='remove'>
-        <Button buttonType='invert' type='button'>X</Button>
+        <Button buttonType='invert' type='button' onClick={removeHandler}>&#1005;</Button>
       </div>
     </div>
   )
