@@ -15,7 +15,9 @@ import {
   setDoc,
   getDoc,
   collection,
-  getDocs
+  writeBatch,
+  getDocs,
+  query
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -28,6 +30,7 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
+
 
 //google provider
 const googleProvider = new GoogleAuthProvider();
@@ -45,6 +48,21 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 //instantiate DB
 export const db = getFirestore();
 
+
+//Add batch collection and documents
+export const addCollectionAndDocumnets = async (collectionKey, objectsToAdd) => {
+  const collectionRef = collection(db, collectionKey);  
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach(object => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  })
+
+  await batch.commit();
+}
+
+//Create a user
 export const createUserDocument = async(
   user, 
   options = {}) => {
@@ -117,3 +135,23 @@ export const signOutUser = async () => signOut(auth);
 
 //AUTH STATE CHANGE
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback )
+
+
+
+//GET CATEGORIES AND PRODUCTS
+export const getCategoriesDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    //destructure 
+    const {title, items} = docSnapshot.data();
+    //assign title as array then assign items array
+    acc[title.toLowerCase()] = items;
+    
+    return acc;
+  }, {})
+
+  return categoryMap;
+}

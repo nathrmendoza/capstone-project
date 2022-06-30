@@ -1,16 +1,24 @@
 
 import { createContext, useEffect, useState } from "react";
-import SNEAKER_DATA from '../products.json';
+import { 
+  getCategoriesDocuments 
+} from '../utils/firebase/firebase.utils'
 
-export const ProductsContext = createContext([]);
+export const ProductsContext = createContext({
+  currentProducts: []
+});
 
 export const ProductsProvider = ({children}) => {
-  const [currentProducts, setCurrentProducts] = useState(null);
+  const [currentProducts, setCurrentProducts] = useState({});
   const value = {currentProducts, setCurrentProducts}
 
   useEffect(() => {
-    setCurrentProducts(SNEAKER_DATA);
-    console.log(currentProducts)
+    const getCategDocs = async () => {
+      const response = await getCategoriesDocuments();
+      setCurrentProducts(response);
+    }
+
+    getCategDocs();
   }, [])
 
   return (

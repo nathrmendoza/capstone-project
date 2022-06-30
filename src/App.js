@@ -18,9 +18,7 @@ function App() {
         <Route path='/' element={<Navigation />}>
           <Route index element={<Homepage/>}/>
           <Route path='/authentication' element={<Authentication/>}/>
-          <Route path='/shop' element={<Shop/>}>
-            <Route path='/shop/subpage' element={<ShopSubpage/>}/>
-          </Route>
+          <Route path='/shop/*' element={<Shop/>}/>
           <Route path='/checkout' element={<CheckoutPage/>}/>
         </Route>
       </Routes>
