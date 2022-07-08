@@ -1,15 +1,14 @@
 import React from 'react'
+import { CategoryListingWrapper } from '../styles/components/category-listing.styles'
+
 import CategoryListingItem from './category-listing-item'
-import '../styles/components/categories-listing.scss'
 
 const CategoryListing = ({categories}) => {
   
     return (
-      <div className="App">
-        <div className="categories-listing">
+      <CategoryListingWrapper>
         {categories.map((e, index) => <CategoryListingItem key={index} props={e} />)}
-        </div>
-      </div>
+      </CategoryListingWrapper>
     );
 }
 

@@ -2,7 +2,7 @@ import React, { Fragment, useContext} from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
 import { UserContext } from '../context/user.context'
-import Button from './button';
+import Button, { BUTTON_TYPES } from './button';
 import CartIcon from './cart-icon';
 
 import { signOutUser } from '../utils/firebase/firebase.utils';
@@ -29,7 +29,7 @@ const Navigation = () => {
           {!currentUser ? <li><Link to='/authentication'>Sign in</Link></li> 
           : <Fragment>
               <li><p>Hi {currentUser.displayName}</p></li>
-              <li><Button type='button' buttonType='default' onClick={signOutUser}>Sign out</Button></li>
+              <li><Button type='button' buttonType={BUTTON_TYPES.default} onClick={signOutUser}>Sign out</Button></li>
               <li style={{position: 'relative'}}><CartIcon onClickHandler={toggleCartDropdown}/>
                 {isCartOpen && <CartDropDown clickOutsideHandler={toggleCartDropdown}/>}
               </li>

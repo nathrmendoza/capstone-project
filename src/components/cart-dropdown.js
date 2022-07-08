@@ -1,7 +1,9 @@
 import React, {useRef, useEffect, useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from './button'
-import '../styles/components/cart-dropdown.scss'
+
+import { CartDropdownWrapper, CartItemsWrapper } from '../styles/components/cart/cart-dropdown.styles'
+
 import CartItem from './cart-item';
 import { CartContext } from '../context/cart.context';
 
@@ -37,12 +39,12 @@ const CartDropDown = ({clickOutsideHandler}) => {
   }
 
   return (
-    <div className='cart-dropdown' ref={wrapperRef} >
-      <div className='cart-items'>
+    <CartDropdownWrapper ref={wrapperRef}>
+      <CartItemsWrapper>
         {cartItems.map(item => <CartItem key={item.id} item={item}/>)}
-      </div>
+      </CartItemsWrapper>
       <Button buttonType='default' type='button' onClick={goToCheckoutHandler}>Go to checkout</Button>
-    </div>
+    </CartDropdownWrapper>
   )
 }
 

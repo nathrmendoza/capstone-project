@@ -1,16 +1,17 @@
 import React from 'react'
-import '../styles/components/category-listing-item.scss'
+
+import {CategoryCell, CategoryName, CellBackground, CellDescription} from '../styles/components/category-item.styles'
 
 const CategoryListingItem = ({props}) => {
     const {title, imageUrl} = props
     
     return (
-        <div className="category-cell">
-          <div className="cell-background" style={{backgroundImage: `url(${imageUrl})`}}></div>
-          <div className="cell-description">
-            <h3>{title}</h3>
-          </div>
-        </div>
+      <CategoryCell>
+          <CellBackground style={{backgroundImage: `url(${imageUrl})`}}></CellBackground>
+          <CellDescription>
+            <CategoryName>{title}</CategoryName>
+          </CellDescription>
+      </CategoryCell>
     )
 }
 

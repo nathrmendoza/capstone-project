@@ -2,17 +2,17 @@ import React, { useContext } from 'react'
 import {BsFillCartFill} from 'react-icons/bs'
 import { CartContext } from '../context/cart.context'
 
-import '../styles/components/cart-icon.scss'
+import {CartIconWrapper,CartCount} from '../styles/components/cart/cart-icon.styles'
 
 const CartIcon = ({onClickHandler}) => {
   
   const { cartQuantityOfItems } = useContext(CartContext)
 
   return (
-    <div className='cart-icon' onClick={onClickHandler}>
+    <CartIconWrapper onClick={onClickHandler}>
       <BsFillCartFill/>
-      <span>{cartQuantityOfItems}</span>
-    </div>
+      <CartCount>{cartQuantityOfItems}</CartCount>
+    </CartIconWrapper>
   )
 }
 

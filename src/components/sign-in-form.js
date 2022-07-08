@@ -8,7 +8,7 @@ import {
 } from '../utils/firebase/firebase.utils'
 
 import FormInput from './form-input'
-import Button from './button'
+import Button, { BUTTON_TYPES } from './button'
 
 import { UserContext } from '../context/user.context'
 
@@ -66,8 +66,8 @@ const SignInForm = () => {
         <li><FormInput label='Email' type='email' name='email' onChange={onChangeHandler} value={email}/></li>
         <li><FormInput label='Password' type='password' name='password' onChange={onChangeHandler} value={password}/></li>
       </ul>
-      <Button type='submit' buttonType='submit'>SUBMIT</Button>
-      <Button type='button' buttonType='google' onClick={signInWithGoogle}>Sign in with Google</Button>
+      <Button type='submit' buttonType={BUTTON_TYPES.default}>SUBMIT</Button>
+      <Button type='button' buttonType={BUTTON_TYPES.default} onClick={signInWithGoogle}>Sign in with Google</Button>
     </form>
   )
 }

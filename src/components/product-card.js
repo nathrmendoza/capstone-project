@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Button from './button'
+import Button, { BUTTON_TYPES } from './button'
 import { Link } from 'react-router-dom';
 
 import '../styles/components/products/product-card.scss';
@@ -19,7 +19,7 @@ const ProductCard = ({product}) => {
       <div className='product-info'>
         <h3><Link to={`sneakers/${product.slug}`}>{name}</Link></h3>
         <span className='price-el'>${price}</span>
-        <Button buttonType='invert' type='button' onClick={addProductToCart}>ADD TO CART</Button>
+        <Button buttonType={BUTTON_TYPES.invert} type='button' onClick={addProductToCart}>ADD TO CART</Button>
       </div>
     </div>
   )

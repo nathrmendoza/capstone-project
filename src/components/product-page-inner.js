@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Button from '../components/button'
+import Button, { BUTTON_TYPES } from '../components/button'
 import { CartContext } from '../context/cart.context'
 
 const ProductPageInner = ({product}) => {
@@ -13,7 +13,7 @@ const ProductPageInner = ({product}) => {
     <div className='product-inner'>
       <img src={imageUrl} alt='Product Photo'/>
       <h1>{name}</h1><span>{price}</span>
-      <Button buttonType='default' type='button' onClick={addItemToCartHandler}>ADD TO CART</Button>
+      <Button buttonType={BUTTON_TYPES.default} type='button' onClick={addItemToCartHandler}>ADD TO CART</Button>
     </div>
   )
 }

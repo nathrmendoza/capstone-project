@@ -1,9 +1,10 @@
 import React from 'react'
 
-import '../styles/components/button.scss'
+import {BaseButton, DefaultButton, InvertedButton} from '../styles/components/button.styles'
 
 //button types
-const BUTTON_TYPES = {
+export const BUTTON_TYPES = {
+  base: 'base',
   default: 'default-btn',
   google: 'google-btn',
   submit: 'submit-btn',
@@ -11,8 +12,20 @@ const BUTTON_TYPES = {
   addtocard: 'add-to-card-btn'  
 }
 
-const Button = ({ children, buttonType, ...otherProps }) => (
-  <button className={`${BUTTON_TYPES[buttonType]}`} {...otherProps}>{children}</button>
+const getButton = (buttonType = BUTTON_TYPES.base) => (
+  {
+    [BUTTON_TYPES.base]: BaseButton,
+    [BUTTON_TYPES.default]: DefaultButton,
+    [BUTTON_TYPES.invert]: InvertedButton
+  }[buttonType]
 )
+
+const Button = ({ children, buttonType, ...otherProps }) => {
+  const CustomButton = getButton(buttonType);
+
+  return (
+    <CustomButton {...otherProps}>{children}</CustomButton>
+  )
+}
 
 export default Button

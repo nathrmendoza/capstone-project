@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react'
 
 //components
 import FormInput from './form-input';
-import Button from './button';
+import Button, { BUTTON_TYPES } from './button';
 import { notify } from '../utils/toast-notify/notify';
 
 //firebase
@@ -84,7 +84,7 @@ const SignUpForm = () => {
             <FormInput label='Confirm Password' type='password' name='confirmPassword' onChange={onChangeHandler} value={confirmPassword}/>
           </li>
         </ul>
-        <Button type='submit' buttonType='submit'>SUMBIT</Button>
+        <Button type='submit' buttonType={BUTTON_TYPES.invert}>SUMBIT</Button>
       </form>
     </div>
   )

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Button from '../components/button'
+import Button, { BUTTON_TYPES } from '../components/button'
 import { CartContext } from '../context/cart.context'
 
 const CheckoutItem = ({item}) => {
@@ -18,15 +18,15 @@ const CheckoutItem = ({item}) => {
       </div>
       <div className='name'>{name}</div>
       <div className='quantity'>
-        <Button buttonType='invert' onClick={subHandler} type="button">-</Button>
+        <Button buttonType={BUTTON_TYPES.invert} onClick={subHandler} type="button">-</Button>
         <div className='quan-text'>{quantity}</div>
-        <Button buttonType='invert' onClick={addHandler} type="button">+</Button>
+        <Button buttonType={BUTTON_TYPES.invert} onClick={addHandler} type="button">+</Button>
       </div>
       <div className='price'>
         {price}
       </div>
       <div className='remove'>
-        <Button buttonType='invert' type='button' onClick={removeHandler}>&#1005;</Button>
+        <Button buttonType={BUTTON_TYPES.invert} type='button' onClick={removeHandler}>&#1005;</Button>
       </div>
     </div>
   )
