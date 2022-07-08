@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useContext } from 'react'
 import { ProductsContext } from '../context/products.context'
 import ProductCard from './product-card'

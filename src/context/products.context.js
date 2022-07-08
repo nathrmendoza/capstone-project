@@ -5,12 +5,12 @@ import {
 } from '../utils/firebase/firebase.utils'
 
 export const ProductsContext = createContext({
-  currentProducts: []
+  currentProducts: [],
+  getSpecificProduct: () => {}
 });
 
 export const ProductsProvider = ({children}) => {
   const [currentProducts, setCurrentProducts] = useState({});
-  const value = {currentProducts, setCurrentProducts}
 
   useEffect(() => {
     const getCategDocs = async () => {
@@ -20,6 +20,16 @@ export const ProductsProvider = ({children}) => {
 
     getCategDocs();
   }, [])
+
+  const getSpecificProduct = async (category, slug) => {
+    const response = await getCategoriesDocuments();
+    return response[category].find(item => (item.slug === slug));
+  }
+
+  const value = {
+    currentProducts, 
+    setCurrentProducts, 
+    getSpecificProduct}
 
   return (
     <ProductsContext.Provider value={value}>

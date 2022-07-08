@@ -17,7 +17,7 @@ import {
   collection,
   writeBatch,
   getDocs,
-  query
+  query,
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -50,14 +50,14 @@ export const db = getFirestore();
 
 
 //Add batch collection and documents
-export const addCollectionAndDocumnets = async (collectionKey, objectsToAdd) => {
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
   const collectionRef = collection(db, collectionKey);  
   const batch = writeBatch(db);
 
   objectsToAdd.forEach(object => {
     const docRef = doc(collectionRef, object.title.toLowerCase());
     batch.set(docRef, object);
-  })
+  });
 
   await batch.commit();
 }

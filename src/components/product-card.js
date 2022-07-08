@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import Button from './button'
+import { Link } from 'react-router-dom';
 
 import '../styles/components/products/product-card.scss';
 import { CartContext } from '../context/cart.context';
@@ -16,7 +17,7 @@ const ProductCard = ({product}) => {
     <div className='product-card'>
       <aside className='product-image' style={{backgroundImage: `url(${imageUrl})`}}></aside>
       <div className='product-info'>
-        <h3>{name}</h3>
+        <h3><Link to={`sneakers/${product.slug}`}>{name}</Link></h3>
         <span className='price-el'>${price}</span>
         <Button buttonType='invert' type='button' onClick={addProductToCart}>ADD TO CART</Button>
       </div>

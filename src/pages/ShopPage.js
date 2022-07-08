@@ -5,6 +5,7 @@ import {Routes, Route} from 'react-router-dom'
 
 import ProductsList from '../components/products-list';
 import CategoryPage from './CategoryPage';
+import SinglePage from './SinglePage';
 
 const ShopPage = () => {
   
@@ -13,6 +14,7 @@ const ShopPage = () => {
       {/* if shop/ */}
       <Route index element={<ProductsList/>}/>
       <Route path=':category' element={<CategoryPage/>}/>
+      <Route path=':category/:slug' element={<SinglePage/>}/>
     </Routes>
   )
 }
